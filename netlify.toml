@@ -1,0 +1,24 @@
+[build]
+  base = "/"
+  command = "npm run build"
+  publish = "build/"
+
+
+[build.processing]
+  skip_processing = false  # Set to true to skip all processing
+[build.processing.css]
+  bundle = true
+  minify = false
+[build.processing.js]
+  bundle = true
+  minify = false
+[build.processing.html]
+  pretty_urls = true
+[build.processing.images]
+  compress = true
+
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
