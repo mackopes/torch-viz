@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Text, Plane } from '@react-three/drei'
-import { TextureLoader, MeshStandardMaterial, MeshBasicMaterial } from 'three';
+import { Text } from '@react-three/drei'
+import { TextureLoader } from 'three';
 import SigmaTexture from 'images/Unknown.png';
 
 
