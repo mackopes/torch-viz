@@ -162,8 +162,8 @@ function SelectorBoxMatrix({
 
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
-            const x = initialPosition[0] + i * offset;
-            const y = initialPosition[1] + j * offset;
+            const x = initialPosition[0] + j * offset;
+            const y = initialPosition[1] + i * offset;
             const z = initialPosition[2];
             const shouldHighlight = matrixHighlight.shouldHighlight(i, j);
 
@@ -204,8 +204,8 @@ function BoxMatrix({
 
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
-            const x = initialPosition[0] + i * offset;
-            const y = initialPosition[1] + j * offset;
+            const x = initialPosition[0] + j * offset;
+            const y = initialPosition[1] + i * offset;
             const z = initialPosition[2];
             const shouldHighlight = matrixHighlight.shouldHighlight(i, j);
 
@@ -276,11 +276,11 @@ export default function MatMul() {
                 >
                 <ambientLight />
                 <pointLight position={[10, 10, 10]} />
-                <BoxMatrix initialPosition={[-10, -1, 0]} rows={firstRows} cols={firstCols} color='grey' matrixHighlight={matrixRowHighlight} highlightColor='red' />
-                <Text position={[-5, 1, 0]} color="black" > x </Text>
+                <BoxMatrix initialPosition={[-11, -1, 0]} rows={firstRows} cols={firstCols} color='grey' matrixHighlight={matrixRowHighlight} highlightColor='red' />
+                <Text position={[-4, 1, 0]} color="black" > x </Text>
 
                 <BoxMatrix initialPosition={[-2, -1, 0]} rows={secondRows} cols={secondCols} color='grey' matrixHighlight={matrixColHighlight} highlightColor='blue' />
-                <Text position={[4, 1, 0]} color="black" > = </Text>
+                <Text position={[3.5, 1, 0]} color="black" > = </Text>
                 <SelectorBoxMatrix initialPosition={[6, -1, 0]} rows={resultRows} cols={resultCols} color='grey' matrixHighlight={matrixIndexHighlight} highlighters={highlighters} highlightColor='green' />
 
                 <Result />
