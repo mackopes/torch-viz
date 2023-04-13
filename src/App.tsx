@@ -4,11 +4,13 @@ import MatMul from 'partials/MatMul';
 
 function App() {
   return (
-    <main>
+    <main className="h-screen w-screen container">
       <div>
         <h1> TorchViz </h1>
       </div>
-      <MatMul/>
+      <div className="h-full w-full container">
+        <MatMul/>
+      </div>
     </main>
   );
 }
