@@ -1,8 +1,15 @@
 import React from 'react';
+import MatMul from 'partials/MatMul';
+
 
 function App() {
   return (
-    <span> macka </span>
+    <main>
+      <div>
+        <h1> TorchViz </h1>
+      </div>
+      <MatMul/>
+    </main>
   );
 }
 
