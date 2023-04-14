@@ -284,13 +284,6 @@ export default function MatMul() {
                 <SelectorBoxMatrix initialPosition={[6, -1, 0]} rows={resultRows} cols={resultCols} color='grey' matrixHighlight={matrixIndexHighlight} highlighters={highlighters} highlightColor='green' />
 
                 <Result />
-
-
-                {/* <mesh
-                    position={[-7, -3, 0]}>
-                    <planeBufferGeometry attach="geometry" args={[1, 1]} />
-                    <meshBasicMaterial attach="material" map={sigma} toneMapped={false} />
-                </mesh> */}
             </Canvas>
         </div>
     );

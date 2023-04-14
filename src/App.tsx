@@ -1,5 +1,5 @@
 import React from 'react';
-import MatMul from 'partials/MatMul';
+import MatMul from 'partials/torch/MatMul';
 
 
 function App() {
