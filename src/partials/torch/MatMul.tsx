@@ -248,7 +248,7 @@ function Result() {
     )
 }
 
-export default function MatMul() {
+export default function TMatMul() {
     const [matrixRowHighlight, setMatrixRowHighlight] = useState(new MatrixRowHighlight(-1));
     const [matrixColHighlight, setMatrixColHighlight] = useState(new MatrixColHighlight(-1));
     const [matrixIndexHighlight, setMatrixIndexHighlight] = useState(new MatrixIndexHighlight(-1, -1));

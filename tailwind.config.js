@@ -11,7 +11,8 @@ module.exports = {
           highlight: "#FCA311",
         },
         fontFamily: {
-          merriweather: ['Merriweather Sans']
+          merriweather: ['Merriweather Sans'],
+          roboto: ['Roboto'],
         },
       },
     },
