@@ -14,7 +14,7 @@ export default function Menu() {
             <div className="m-4">
                 <ul className='list-none gap-1 flex flex-col' >
                     <li> <MenuItem name='matmul' link='/matmul'/> </li>
-                    <li> <MenuItem name='matmul' link='/matmul'/> </li>
+                    <li> <MenuItem name='gather' link='/gather'/> </li>
                 </ul>
             </div>
         </div>

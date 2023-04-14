@@ -3,188 +3,8 @@ import { Text } from '@react-three/drei'
 import { TextureLoader } from 'three';
 import SigmaTexture from 'images/Unknown.png';
 import Box from 'components/Box';
-
-class MatrixHighlight {
-    shouldHighlight(i: number, j: number): boolean {
-        return false;
-    }
-
-    getOnSelect(i: number, j: number): () => void {
-        return () => {};
-    }
-
-    getNewHighlight(i: number, j: number): MatrixHighlight {
-        return new MatrixHighlight();
-    }
-}
-
-class MatrixRowHighlight extends MatrixHighlight {
-    private row: number;
-
-    constructor(row: number) {
-        super();
-        this.row = row;
-    }
-
-    shouldHighlight(i: number, j: number): boolean {
-        return i === this.row;
-    }
-
-    getOnSelect(i: number, j: number): () => void {
-        return () => {
-            this.row = i;
-        };
-    }
-
-    getNewHighlight(i: number, j: number): MatrixRowHighlight {
-        return new MatrixRowHighlight(i);
-    }
-}
-
-class MatrixColHighlight extends MatrixHighlight {
-    private col: number;
-
-    constructor(col: number) {
-        super();
-        this.col = col;
-    }
-
-    shouldHighlight(i: number, j: number): boolean {
-        return j === this.col;
-    }
-
-    getOnSelect(i: number, j: number): () => void {
-        return () => {
-            this.col = j;
-        };
-    }
-
-    getNewHighlight(i: number, j: number): MatrixColHighlight {
-        return new MatrixColHighlight(j);
-    }
-
-}
-
-class MatrixIndexHighlight extends MatrixHighlight {
-    private i: number;
-    private j: number;
-
-    constructor(i: number, j: number) {
-        super();
-        this.i = i;
-        this.j = j;
-    }
-
-    shouldHighlight(i: number, j: number): boolean {
-        return i === this.i && j === this.j;
-    }
-
-    getOnSelect(i: number, j: number): () => void {
-        return () => {
-            this.i = i;
-            this.j = j;
-        };
-    }
-
-    getNewHighlight(i: number, j: number): MatrixIndexHighlight {
-        return new MatrixIndexHighlight(i, j);
-    }
-}
-
-interface BoxMatrixProps {
-    cols?: number;
-    rows?: number;
-    initialPosition?: [number, number, number];
-    offset?: number;
-    color?: string;
-    hoverColor?: string;
-    highlightColor?: string;
-    matrixHighlight?: MatrixHighlight;
-}
-
-interface SelectorBoxMatrixProps extends BoxMatrixProps {
-    highlighters: {highlight: MatrixHighlight, setHighlight: (highlight: MatrixHighlight) => void}[];
-}
-
-function SelectorBoxMatrix({
-        cols = 4,
-        rows = 3,
-        initialPosition = [-10, 0, 0],
-        offset = 1.5,
-        color = 'orange',
-        hoverColor='hotpink',
-        highlightColor = 'hotpink',
-        matrixHighlight = new MatrixHighlight(),
-        highlighters = [],
-
-    }:
-    SelectorBoxMatrixProps) {
-
-    const boxes = [];
-
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-            const x = initialPosition[0] + j * offset;
-            const y = initialPosition[1] + i * offset;
-            const z = initialPosition[2];
-            const shouldHighlight = matrixHighlight.shouldHighlight(i, j);
-
-            const selectCallback = () => {
-                console.log("selectCallback")
-                for (const highlighter of highlighters) {
-                    highlighter.setHighlight(highlighter.highlight.getNewHighlight(i, j));
-                }
-            };
-
-            if (shouldHighlight) {
-                boxes.push(<Box position={[x, y, z]} color={highlightColor} hoverColor={hoverColor} onSelect={() => selectCallback()}/>);
-            } else {
-                boxes.push(<Box position={[x, y, z]} color={color} hoverColor={hoverColor} onSelect={() => selectCallback()}/>);
-            }
-
-        }
-    }
-
-    return (
-        <group>
-            {boxes}
-        </group>
-    );
-}
-
-function BoxMatrix({
-    cols = 4,
-    rows = 3,
-    initialPosition = [-10, 0, 0],
-    offset = 1.5,
-    color = 'orange',
-    hoverColor='hotpink',
-    highlightColor = 'hotpink',
-    matrixHighlight = new MatrixHighlight(),
-}: BoxMatrixProps) {
-    const boxes = [];
-
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-            const x = initialPosition[0] + j * offset;
-            const y = initialPosition[1] + i * offset;
-            const z = initialPosition[2];
-            const shouldHighlight = matrixHighlight.shouldHighlight(i, j);
-
-            if (shouldHighlight) {
-                boxes.push(<Box position={[x, y, z]} color={highlightColor} hoverColor={hoverColor} />);
-            } else {
-                boxes.push(<Box position={[x, y, z]} color={color} hoverColor={hoverColor}/>);
-            }
-        }
-    }
-
-    return (
-        <group>
-            {boxes}
-        </group>
-    );
-}
+import { BoxMatrix, MatrixColHighlight, MatrixHighlight, MatrixIndexHighlight, MatrixRowHighlight, SelectorBoxMatrix } from 'components/BoxMatrix';
+import { leftMat, midMat, rightMat } from 'helpers/constants';
 
 function Result() {
     const sigma = new TextureLoader().load(SigmaTexture);
@@ -231,12 +51,12 @@ export default function TMatMul() {
 
     return (
         <>
-            <BoxMatrix initialPosition={[-11, -1, 0]} rows={firstRows} cols={firstCols} color='grey' matrixHighlight={matrixRowHighlight} highlightColor='red' />
+            <BoxMatrix position={leftMat} rows={firstRows} cols={firstCols} color='grey' matrixHighlight={matrixRowHighlight} highlightColor='red' />
             <Text position={[-4, 1, 0]} color="black" > x </Text>
 
-            <BoxMatrix initialPosition={[-2, -1, 0]} rows={secondRows} cols={secondCols} color='grey' matrixHighlight={matrixColHighlight} highlightColor='blue' />
+            <BoxMatrix position={midMat} rows={secondRows} cols={secondCols} color='grey' matrixHighlight={matrixColHighlight} highlightColor='blue' />
             <Text position={[3.5, 1, 0]} color="black" > = </Text>
-            <SelectorBoxMatrix initialPosition={[6, -1, 0]} rows={resultRows} cols={resultCols} color='grey' matrixHighlight={matrixIndexHighlight} highlighters={highlighters} highlightColor='green' />
+            <SelectorBoxMatrix position={rightMat} rows={resultRows} cols={resultCols} color='grey' matrixHighlight={matrixIndexHighlight} highlighters={highlighters} highlightColor='green' />
 
             <Result />
         </>

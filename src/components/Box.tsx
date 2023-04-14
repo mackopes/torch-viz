@@ -4,13 +4,14 @@ import { useRef, useState } from 'react';
 
 interface BoxProps {
     position: [number, number, number];
+    scale?: number;
     color?: string;
     hoverColor?: string;
     onSelect?: () => void;
     moving?: boolean;
 }
 
-export default function Box({position, color='orange', hoverColor='hotpink', onSelect=() => {}, moving=true}: BoxProps) {
+export default function Box({position, scale=1, color='orange', hoverColor='hotpink', onSelect=() => {}, moving=true}: BoxProps) {
     const mesh = useRef<THREE.Mesh>(null!)
     const [hovered, setHover] = useState(false)
 
@@ -29,6 +30,7 @@ export default function Box({position, color='orange', hoverColor='hotpink', onS
     })
     return (
         <mesh position={position}
+              scale={scale}
               ref={mesh}
               onClick={(event) => onSelect()}
               onPointerOver={(event) => setHover(true)}
