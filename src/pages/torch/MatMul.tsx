@@ -1,11 +1,11 @@
 import React from "react";
 import TMatMul from "partials/torch/MatMul";
-import PageSkeleton from "partials/page/PageSkeleton";
+import VizPageSkeleton from "partials/page/VizPageSkeleton";
 
 export default function MatMul() {
     return (
-        <PageSkeleton>
+        <VizPageSkeleton>
             <TMatMul/>
-        </PageSkeleton>
+        </VizPageSkeleton>
     );
   }

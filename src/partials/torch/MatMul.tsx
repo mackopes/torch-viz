@@ -1,46 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber'
+import React, { useState } from 'react';
 import { Text } from '@react-three/drei'
 import { TextureLoader } from 'three';
 import SigmaTexture from 'images/Unknown.png';
-
-
-interface BoxProps {
-    position: [number, number, number];
-    color?: string;
-    hoverColor?: string;
-    onSelect?: () => void;
-    moving?: boolean;
-}
-
-function Box({position, color='orange', hoverColor='hotpink', onSelect=() => {}, moving=true}: BoxProps) {
-    const mesh = useRef<THREE.Mesh>(null!)
-    const [hovered, setHover] = useState(false)
-
-    const rotationDamping = 0.2;
-
-    useFrame((state, delta) => {
-        // current pointer position
-        const pointer = state.pointer;
-        // rotate the cube sligtly towards the pointer
-
-        if (moving) {
-            mesh.current.rotation.y = pointer.x * rotationDamping;
-            mesh.current.rotation.x = -pointer.y * rotationDamping;
-        }
-
-    })
-    return (
-        <mesh position={position}
-              ref={mesh}
-              onClick={(event) => onSelect()}
-              onPointerOver={(event) => setHover(true)}
-              onPointerOut={(event) => setHover(false)}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color={hovered ? hoverColor : color} />
-        </mesh>
-    )
-}
+import Box from 'components/Box';
 
 class MatrixHighlight {
     shouldHighlight(i: number, j: number): boolean {
@@ -267,24 +229,16 @@ export default function TMatMul() {
     const resultRows = firstRows;
     const resultCols = secondCols;
 
-
     return (
-        <div className="border-2 border-red-500 h-[400px] w-full container relative">
-            <Canvas
-                // orthographic camera={{ zoom: 30, position: [0, 0, 100]}}
-                camera={{ position: [0, 0, 60], fov: 10 }}
-                >
-                <ambientLight />
-                <pointLight position={[10, 10, 10]} />
-                <BoxMatrix initialPosition={[-11, -1, 0]} rows={firstRows} cols={firstCols} color='grey' matrixHighlight={matrixRowHighlight} highlightColor='red' />
-                <Text position={[-4, 1, 0]} color="black" > x </Text>
+        <>
+            <BoxMatrix initialPosition={[-11, -1, 0]} rows={firstRows} cols={firstCols} color='grey' matrixHighlight={matrixRowHighlight} highlightColor='red' />
+            <Text position={[-4, 1, 0]} color="black" > x </Text>
 
-                <BoxMatrix initialPosition={[-2, -1, 0]} rows={secondRows} cols={secondCols} color='grey' matrixHighlight={matrixColHighlight} highlightColor='blue' />
-                <Text position={[3.5, 1, 0]} color="black" > = </Text>
-                <SelectorBoxMatrix initialPosition={[6, -1, 0]} rows={resultRows} cols={resultCols} color='grey' matrixHighlight={matrixIndexHighlight} highlighters={highlighters} highlightColor='green' />
+            <BoxMatrix initialPosition={[-2, -1, 0]} rows={secondRows} cols={secondCols} color='grey' matrixHighlight={matrixColHighlight} highlightColor='blue' />
+            <Text position={[3.5, 1, 0]} color="black" > = </Text>
+            <SelectorBoxMatrix initialPosition={[6, -1, 0]} rows={resultRows} cols={resultCols} color='grey' matrixHighlight={matrixIndexHighlight} highlighters={highlighters} highlightColor='green' />
 
-                <Result />
-            </Canvas>
-        </div>
+            <Result />
+        </>
     );
 }
