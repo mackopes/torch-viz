@@ -1,5 +1,5 @@
 import React from 'react';
-import PageSkeleton from 'pages/PageSkeleton';
+import PageSkeleton from 'partials/page/PageSkeleton';
 
 function Body() {
     return (
