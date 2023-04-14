@@ -4,7 +4,7 @@ import { TextureLoader } from 'three';
 import SigmaTexture from 'images/Unknown.png';
 import Box from 'components/Box';
 import { BoxMatrix, MatrixColHighlight, MatrixHighlight, MatrixIndexHighlight, MatrixRowHighlight, SelectorBoxMatrix } from 'components/BoxMatrix';
-import { leftMat, midMat, rightMat } from 'helpers/constants';
+import { gap2d, leftMat, midMat, rightMat } from 'helpers/constants';
 
 function Result() {
     const sigma = new TextureLoader().load(SigmaTexture);
@@ -51,12 +51,12 @@ export default function TMatMul() {
 
     return (
         <>
-            <BoxMatrix position={leftMat} rows={firstRows} cols={firstCols} color='grey' matrixHighlight={matrixRowHighlight} highlightColor='red' />
+            <BoxMatrix position={leftMat} gap={gap2d} rows={firstRows} cols={firstCols} color='grey' matrixHighlight={matrixRowHighlight} highlightColor='red' />
             <Text position={[-4, 1, 0]} color="black" > x </Text>
 
-            <BoxMatrix position={midMat} rows={secondRows} cols={secondCols} color='grey' matrixHighlight={matrixColHighlight} highlightColor='blue' />
+            <BoxMatrix position={midMat} gap={gap2d} rows={secondRows} cols={secondCols} color='grey' matrixHighlight={matrixColHighlight} highlightColor='blue' />
             <Text position={[3.5, 1, 0]} color="black" > = </Text>
-            <SelectorBoxMatrix position={rightMat} rows={resultRows} cols={resultCols} color='grey' matrixHighlight={matrixIndexHighlight} highlighters={highlighters} highlightColor='green' />
+            <SelectorBoxMatrix position={rightMat}gap={gap2d}  rows={resultRows} cols={resultCols} color='grey' matrixHighlight={matrixIndexHighlight} highlighters={highlighters} highlightColor='green' />
 
             <Result />
         </>
