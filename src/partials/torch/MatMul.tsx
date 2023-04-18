@@ -9,31 +9,35 @@ import { gap2d, leftMat, midMat, rightMat } from 'helpers/constants';
 function Result() {
     const sigma = new TextureLoader().load(SigmaTexture);
 
+    const left = -5;
+    const top = -5;
+
     return (
         <>
-            <Box position={[-7, -3, 0]} color={'green'} hoverColor={'green'} moving={false}/>
-            <Text position={[-5, -3, 0]} color="black" > = </Text>
+            <Text position={[left, top+2, 0]} fontSize={0.5} font="Roboto" color="black" > where </Text>
+            <Box position={[left, top, 0]} color={'green'} hoverColor={'green'} />
+            <Text position={[left+1.2, top, 0]} color="black" > = </Text>
             <mesh
-                position={[-3, -3, 0]}>
+                position={[left+2.4, top, 0]}>
                 <planeBufferGeometry attach="geometry" args={[1, 1]} />
                 <meshBasicMaterial attach="material" map={sigma} toneMapped={false} />
             </mesh>
-            <Text position={[-3, -4, 0]} color="black" fontSize={0.5} > i </Text>
+            <Text position={[left+2.4, top-1, 0]} color="black" fontSize={0.5} > i </Text>
 
-            <Box position={[0, -3, 0]} color={'red'} hoverColor={'red'} moving={false}/>
-            <Text position={[0.6, -3.5, 0]} color="black" fontSize={0.5} > i </Text>
-            <Text position={[2, -3, 0]} color="black" > x </Text>
-            <Box position={[4, -3, 0]} color={'blue'} hoverColor={'blue'} moving={false}/>
-            <Text position={[4.6, -3.5, 0]} color="black" fontSize={0.5} > i </Text>
+            <Box position={[left + 4, top, 0]} color={'red'} hoverColor={'red'} />
+            <Text position={[left + 4.6, top - 0.5, 0]} color="black" fontSize={0.5} > i </Text>
+            <Text position={[left + 5.3, top, 0]} color="black" > x </Text>
+            <Box position={[left + 6.8, top, 0]} color={'blue'} hoverColor={'blue'} />
+            <Text position={[left + 7.4, top - 0.5, 0]} color="black" fontSize={0.5} > i </Text>
 
         </>
     )
 }
 
 export default function TMatMul() {
-    const [matrixRowHighlight, setMatrixRowHighlight] = useState(new MatrixRowHighlight(-1));
-    const [matrixColHighlight, setMatrixColHighlight] = useState(new MatrixColHighlight(-1));
-    const [matrixIndexHighlight, setMatrixIndexHighlight] = useState(new MatrixIndexHighlight(-1, -1));
+    const [matrixRowHighlight, setMatrixRowHighlight] = useState(new MatrixRowHighlight(1));
+    const [matrixColHighlight, setMatrixColHighlight] = useState(new MatrixColHighlight(1));
+    const [matrixIndexHighlight, setMatrixIndexHighlight] = useState(new MatrixIndexHighlight(1, 1));
 
     const highlighters: {highlight: MatrixHighlight, setHighlight: (highlight: MatrixHighlight) => void}[] = [
         {highlight: matrixRowHighlight, setHighlight: setMatrixRowHighlight as (highlight: MatrixHighlight) => void},
@@ -51,12 +55,25 @@ export default function TMatMul() {
 
     return (
         <>
+            <Text position={[-11, 1, 0]} color="black" font='Roboto' fontSize={0.5} > torch.matmul </Text>
+            <Text position={[-9.3, 1, 0]} color="black" font='Roboto' fontSize={3} > ( </Text>
             <BoxMatrix position={leftMat} gap={gap2d} rows={firstRows} cols={firstCols} color='grey' matrixHighlight={matrixRowHighlight} highlightColor='red' />
-            <Text position={[-4, 1, 0]} color="black" > x </Text>
-
+            <Text position={[-2.8, 1, 0]} color="black" fontSize={2} > , </Text>
             <BoxMatrix position={midMat} gap={gap2d} rows={secondRows} cols={secondCols} color='grey' matrixHighlight={matrixColHighlight} highlightColor='blue' />
-            <Text position={[3.5, 1, 0]} color="black" > = </Text>
+            <Text position={[2.3, 1, 0]} color="black" font='Roboto' fontSize={3} > ) </Text>
+
+            <Text position={[4, 1, 0]} fontSize={1.1} color="black" > {"->"} </Text>
             <SelectorBoxMatrix position={rightMat}gap={gap2d}  rows={resultRows} cols={resultCols} color='grey' matrixHighlight={matrixIndexHighlight} highlighters={highlighters} highlightColor='green' />
+
+
+            {/* <Text position={[-8.4, 4, 0]} color="black" font='Roboto' fontSize={1}> input  </Text>
+            <BoxMatrix position={[-7, 1, 0]} gap={gap2d} rows={firstRows} cols={firstCols} color='grey' matrixHighlight={matrixRowHighlight} highlightColor='red' />
+
+            <Text position={[-0.8, 4, 0]} color="black" font='Roboto' fontSize={1}> other  </Text>
+            <BoxMatrix position={midMat} gap={gap2d} rows={secondRows} cols={secondCols} color='grey' matrixHighlight={matrixColHighlight} highlightColor='blue' />
+
+            <Text position={[4, 1, 0]} fontSize={1.1} color="black" > {"->"} </Text>
+            <SelectorBoxMatrix position={rightMat}gap={gap2d}  rows={resultRows} cols={resultCols} color='grey' matrixHighlight={matrixIndexHighlight} highlighters={highlighters} highlightColor='green' /> */}
 
             <Result />
         </>
